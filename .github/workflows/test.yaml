@@ -47,12 +47,7 @@ jobs:
       - name: Build on all supported architectures under SBOMit
         uses: Uk-jake/sbomit-pipeline-runner@main
         with:
-          build-command:
-            set -e
-            for arch in ${LINUX_ARCHES}; do
-              echo "Building for arch $arch"
-              GOARCH=$arch go build ./...
-            done
+          build-command: 'set -e; for arch in ${LINUX_ARCHES}; do echo "Building for arch $arch"; GOARCH=$arch go build ./...; done'
           sbom-format: spdx23
           use-syft: true
 
