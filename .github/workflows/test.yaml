@@ -31,7 +31,7 @@ jobs:
         with:
           args: --verbose
           version: v1.57.1
-#baseline
+
   build:
     name: Build all linux architectures
     needs: lint
@@ -44,13 +44,17 @@ jobs:
 
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332  # v4.1.7
 
-      - name: Build on all supported architectures
-        run: |
-          set -e
-          for arch in ${LINUX_ARCHES}; do
-            echo "Building for arch $arch"
-            GOARCH=$arch go build ./...
-          done
+      - name: Build on all supported architectures under SBOMit
+        uses: Uk-jake/sbomit-pipeline-runner@main
+        with:
+          build-command:
+            set -e
+            for arch in ${LINUX_ARCHES}; do
+              echo "Building for arch $arch"
+              GOARCH=$arch go build ./...
+            done
+          sbom-format: spdx23
+          use-syft: true
 
   test-linux:
     name: Run tests on Linux amd64
