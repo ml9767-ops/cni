@@ -1,0 +1,22 @@
+name: Build Time Test
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sbom:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      - name: Build
+        run: |
+          mkdir -p ./bin
+          go build -o ./bin/cnitool ./cnitool/
