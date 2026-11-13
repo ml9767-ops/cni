@@ -29,3 +29,9 @@ jobs:
           build-command: 'mkdir -p ./bin && go build -o ./bin/cnitool ./cnitool/'
           sbom-format: spdx23
           use-syft: true
+
+      - name: Record Build Results
+        run: |
+          test -s ./bin/cnitool
+          ls -lh ./bin/cnitool
+          sha256sum ./bin/cnitool
